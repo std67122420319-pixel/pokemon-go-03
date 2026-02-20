@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from pokemon.extensions import db, login_manager, bcrypt
 from pokemon.models import User, Type, Pokemon
-from pakemon.core.routes import core_bp
+from pokemon.core.routes import core_bp
 
 def create_app():
     app = Flask(__name__)
