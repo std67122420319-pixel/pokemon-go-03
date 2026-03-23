@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from pokemon.extensions import db
 from pokemon.models import Pokemon, User,Type
+from pokemon.pokemon_types import types as default_type_names
 from flask_login import current_user, login_required
 
 
@@ -16,6 +17,11 @@ def index():
 @login_required
 def new_pokemon():
     pokemon_types = db.session.scalars(db.select(Type)).all()
+    if not pokemon_types:
+        db.session.add_all([Type(name=type_name) for type_name in default_type_names])
+        db.session.commit()
+        pokemon_types = db.session.scalars(db.select(Type)).all()
+
     if request.method == 'POST':
         name = request.form.get('name')
         height = request.form.get('height')

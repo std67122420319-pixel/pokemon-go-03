@@ -103,7 +103,7 @@ def change_password():
     if request.method == 'POST':
         old_password = request.form.get('old_password')
         new_password = request.form.get('new_password')
-        confirm_new_password = request.form.get('confirm_new_password')
+        confirm_new_password = request.form.get('confirm_new_password') or request.form.get('confirm_password')
 
         if not bcrypt.check_password_hash(current_user.password, old_password):
             flash('Old password is incorrect.', 'warning')
